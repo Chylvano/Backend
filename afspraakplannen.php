@@ -1,5 +1,6 @@
 <?php
 require ("assets/includes/functions.php");
+require ("assets/includes/navbar.php");
 ?>
 
 <!DOCTYPE html>
