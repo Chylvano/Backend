@@ -24,11 +24,37 @@ catch(PDOException $e)
 
 function getAllAfspraken(){
     $conn = connect();
-    $stmt = $conn->prepare('SELECT * FROM lijst ORDER BY NAAM');
+    $stmt = $conn->prepare('SELECT * FROM lijst');
     $stmt->execute();
     $result = $stmt->fetchAll();
     return $result;
 }
+
+function getAllAfsprakenByName(){
+    $conn = connect();
+    $stmt = $conn->prepare('SELECT * FROM lijst ORDER BY date, tijd');
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+}
+
+function getAllTakenInLijst(){
+    $conn = connect();
+    $stmt = $conn->prepare('SELECT * FROM taken ORDER BY datum, tijd');
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+}
+
+function getAllAfsprakenExceptCurrent(){
+    $conn = connect();
+    $stmt = $conn->prepare('SELECT * FROM lijst');
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+}
+
+//$stmt = $conn->prepare('SELECT * FROM lijst WHERE id != :id ORDER BY date, tijd');
 
 function countAllAfspraken(){
     $conn = connect();
@@ -46,6 +72,11 @@ function getOneAfspraak(){
     return $result;
 }
 
-
+function deleteAfspraak($deleteid){
+    $conn = connect();
+    $stmt = $conn->prepare("DELETE FROM lijst WHERE id = :id");
+    $stmt->bindParam(":id", $deleteid);
+    $stmt->execute();
+}
 ?>
 
