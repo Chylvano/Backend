@@ -38,10 +38,18 @@ function getAllAfsprakenByName(){
     return $result;
 }
 
-function getAllTakenInLijst(){
+function getAllTakenInLijst1(){
     $conn = connect();
     $stmt = $conn->prepare('SELECT * FROM taken ORDER BY datum, tijd');
     $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
+}
+
+function getAllTakenInLijst(){
+    $conn = connect();
+    $stmt = $conn->prepare("SELECT * FROM taken where lijst_id=:id");
+    $stmt->execute(['id' => $_GET['id']]);
     $result = $stmt->fetchAll();
     return $result;
 }
@@ -77,6 +85,14 @@ function deleteAfspraak($deleteid){
     $stmt = $conn->prepare("DELETE FROM lijst WHERE id = :id");
     $stmt->bindParam(":id", $deleteid);
     $stmt->execute();
+}
+
+function countAllTaken(){
+    $conn = connect();
+    $pdoQuery = "select id from taken";
+    $pdoResult = $conn->query($pdoQuery);
+    $rows = $pdoResult->rowCount();
+    return $rows;
 }
 ?>
 
