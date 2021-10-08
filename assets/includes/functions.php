@@ -46,23 +46,6 @@ function getAllTakenInLijst1(){
     return $result;
 }
 
-function getAllTakenInLijst(){
-    $conn = connect();
-    $stmt = $conn->prepare("SELECT * FROM taken where lijst_id=:id");
-    $stmt->execute(['id' => $_GET['id']]);
-    $result = $stmt->fetchAll();
-    return $result;
-}
-
-function getAllAfsprakenExceptCurrent(){
-    $conn = connect();
-    $stmt = $conn->prepare('SELECT * FROM lijst');
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    return $result;
-}
-
-//$stmt = $conn->prepare('SELECT * FROM lijst WHERE id != :id ORDER BY date, tijd');
 
 function countAllAfspraken(){
     $conn = connect();
@@ -93,6 +76,25 @@ function countAllTaken(){
     $pdoResult = $conn->query($pdoQuery);
     $rows = $pdoResult->rowCount();
     return $rows;
+}
+
+function getAllTakenById($id){   
+    $conn = connect();
+    $stmt = $conn->prepare("SELECT * FROM taken WHERE lijst_id = :id"); 
+    $stmt->execute(['id' => $id]);
+    return $stmt->fetchAll();
+}
+
+function editTaak($id, $lijst_id, $naam, $info, $datum, $status){
+    $conn = connect(); 
+    $stnt = $conn->prepare("UPDATE taken SET id = :id, lijst_id = :lijst_id,   naam = :naam,  info = :info, datum = :datum,  status = :status WHERE id = :id");
+    $stnt->bindParam(':id', $id);
+    $stnt->bindParam(':lijst_id', $lijst_id);
+    $stnt->bindParam(':naam', $naam);
+    $stnt->bindParam(':info', $info);
+    $stnt->bindParam(':datum', $datum);
+    $stnt->bindParam(':status', $status);
+    $stnt->execute();
 }
 ?>
 

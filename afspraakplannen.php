@@ -2,6 +2,10 @@
 require ("assets/includes/functions.php");
 require ("assets/includes/navbar.php");
 $result = getOneAfspraak();
+$month = date('m');
+$day = date('d');
+$year = date('Y');
+$today = $year . '-' . $month . '-' . $day;
 ?>
 
 <body class="text-center">
@@ -16,13 +20,14 @@ $result = getOneAfspraak();
         </p>
         <p class="my-4 form-group">
             <label for="tijd">Datum:</label>
-            <input id="date" name="date" type="number" placeholder="<?=Date('j-n-Y')?>" />
+            <input type="date" value="<?php echo $today; ?>" class="date" id="date" name="date">
         </p>
         <p class="my-4 form-group">
             <label for="tijd">Tijd:</label>
             <input type="time" name="tijd" id="tijd" required>
         </p>
         <input type="hidden" id="lijst_id" name="lijst_id" value="<?=$result['id']?>">
+        <input type="hidden" id="status" name="status" value="onvoltooid">
         <input type="submit" class="btn btn-primary" name="save">
     </form>
 </body>

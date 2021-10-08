@@ -1,22 +1,21 @@
 <?php 
 	$db = mysqli_connect('localhost', 'root', '', 'backend');
 
+    $lijst_id = "";
 	$naam = "";
     $info = "";
-    $tijd = "";
     $datum = "";
-    $lijst_id = "";
-
+ 
 	if (isset($_POST['save'])) {
+        $lijst_id = $_POST['lijst_id'];
 		$naam = $_POST['naam'];
         $info = $_POST['info'];
-        $tijd = $_POST['tijd'];
         $datum = $_POST['datum'];
-        $lijst_id = $_POST['lijst_id'];
+      
 		
 
-		mysqli_query($db, "INSERT INTO taken (naam, info, tijd, datum, lijst_id)
-		VALUES ('$naam', '$info', '$tijd', '$datum', 'lijst_id')"); 
+		mysqli_query($db, "INSERT INTO taken (lijst_id, naam, info, datum)
+		VALUES ('$lijst_id', '$naam', '$info', '$datum' )"); 
 		header('location: index.php');
     }
 ?>
