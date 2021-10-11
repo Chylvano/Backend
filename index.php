@@ -3,22 +3,21 @@ require ("assets/includes/functions.php");
 require ("assets/includes/navbar.php");
 $result = getAllAfspraken();
 $rows = countAllAfspraken();
-$conn = connect();
+$datum = 'a';
+$status = 'a';
+if($datum == 'datum'){
+
+}
 ?>
 
-
-<style>
-    .green{
-        color: green;
-    }
-</style>
 <body>
 <div class="container">
 <div>
         <label for="naam">Sorteren op:</label><br>
-        <select class="form-control <?=$class["naam"] ?>" name="naam">
+        <select class="form-control">
             <option value="" disabled selected hidden>--Selecteer een optie--</option>
-                <option value=""></option>
+                <option class="datum" value="datum">Datum</option>
+                <option class="status" value="status">Status</option>
         </select>
         </div>
     <div class="card-group">
@@ -28,6 +27,7 @@ $conn = connect();
         <div class="card">
                 <div class="card-body m-4">
                     <h4 class="card-title mb-4"><?=$row['naam']?></h4>
+                    <a class="btn-lg btn-info text-white" href="deletelijst.php?id=<?=$row['id']?>">Delete lijst</a>
                     <a class="btn-lg btn-info text-white" href="afspraakplannen.php?id=<?=$row['id']?>">Kaart toevoegen</a>
                     <?php
         $id = $row['id'];
@@ -37,15 +37,15 @@ $conn = connect();
         <?php foreach ($taken as $taak) { ?>
              <div class="card">
                 <div class="card-body">
+                <a class="btn-lg btn-info text-white" href="delete.php?id=<?=$taak['id']?>">Delete Task</a>
             <h4 class="card-title"><?=$taak['naam']?></h4>
             <p class="card-text"><?=$taak['info']?></p>
+          
             <?php if ($taak['status'] == 'voltooid'){?>
-
-                <!-- <a class="taskicons green fas fa-square"></a> -->
-                <a type="button" class="btn btn-primary" href="editstatus.php?id=<?php echo $taak['id']?>&lijst_id=<?php echo $taak['lijst_id']?>&naam=<?php echo $taak['naam']?>&info=<?php echo $taak['info']?>&datum=<?php echo $taak['datum']?>&status=<?php echo $taak['status']?>">Primary</a>
+                <a class="btn btn-success" href="editstatus.php?id=<?php echo $taak['id']?>&status=<?php echo $taak['status']?>"></a>
+           
             <?php } else { ?>
-                <!-- <a class="taskicons red fas fa-square"></a> -->
-                <a type="button" class="btn btn-warning" href="editstatus.php?id=<?php echo $taak['id']?>&lijst_id=<?php echo $taak['lijst_id']?>&naam=<?php echo $taak['naam']?>&info=<?php echo $taak['info']?>&datum=<?php echo $taak['datum']?>&status=<?php echo $taak['status']?>">Warning</a>
+                <a class="btn btn-danger" href="editstatus.php?id=<?php echo $taak['id']?>status=<?php echo $taak['status']?>"></a>
 
           <?php  
           }

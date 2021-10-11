@@ -38,7 +38,7 @@ function getAllAfsprakenByName(){
     return $result;
 }
 
-function getAllTakenInLijst1(){
+function getAllTakenByDate(){
     $conn = connect();
     $stmt = $conn->prepare('SELECT * FROM taken ORDER BY datum, tijd');
     $stmt->execute();
@@ -85,16 +85,31 @@ function getAllTakenById($id){
     return $stmt->fetchAll();
 }
 
-function editTaak($id, $lijst_id, $naam, $info, $datum, $status){
+function editTaak($id, $status){
     $conn = connect(); 
-    $stnt = $conn->prepare("UPDATE taken SET id = :id, lijst_id = :lijst_id,   naam = :naam,  info = :info, datum = :datum,  status = :status WHERE id = :id");
+    $stnt = $conn->prepare("UPDATE taken SET id = :id,  status = :status WHERE id = :id");
     $stnt->bindParam(':id', $id);
-    $stnt->bindParam(':lijst_id', $lijst_id);
-    $stnt->bindParam(':naam', $naam);
-    $stnt->bindParam(':info', $info);
-    $stnt->bindParam(':datum', $datum);
     $stnt->bindParam(':status', $status);
     $stnt->execute();
 }
+
+function deleteTaak($id){
+    $conn = connect();
+    $stmt = $conn->prepare("DELETE FROM taken WHERE id= :deleteid");
+    $stmt->execute([":deleteid" =>$id]);
+}
+
+function deleteLijst($id){
+    $conn = connect();
+    $stmt = $conn->prepare("DELETE FROM lijst WHERE id= :deleteid");
+    $stmt->execute([":deleteid" =>$id]);
+}
+
+function deleteTaakByLijstId($id){
+    $conn = connect();
+    $stmt = $conn->prepare("DELETE FROM taken WHERE lijst_id= :deleteid");
+    $stmt->execute([":deleteid" =>$id]);
+}
+
 ?>
 

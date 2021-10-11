@@ -1,6 +1,7 @@
 <?php
 $id = $_GET['id'];
 require ("assets/includes/functions.php");
-deleteTaak($id);
+deleteLijst($id);
+deleteTaakByLijstId($id);
 header('location: index.php');
 ?>
