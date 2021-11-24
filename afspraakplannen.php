@@ -1,7 +1,6 @@
 <?php
 require ("assets/includes/functions.php");
 require ("assets/includes/navbar.php");
-$result = getOneAfspraak();
 ?>
 
 <body class="text-center">
@@ -15,15 +14,11 @@ $result = getOneAfspraak();
             <input name="info" id="info" placeholder="Info" required>
         </p>
         <p class="my-4 form-group">
-            <label for="tijd">Datum:</label>
-            <input type="date" class="date" id="date" name="date">
+            <label for="datum">Datum:</label>
+            <input type="date" class="datum" id="datum" name="datum" required>
         </p>
-        <p class="my-4 form-group">
-            <label for="tijd">Tijd:</label>
-            <input type="time" name="tijd" id="tijd" required>
-        </p>
-        <input type="hidden" id="lijst_id" name="lijst_id" value="<?=$result['id']?>">
-        <input type="hidden" id="status" name="status" value="onvoltooid">
+        <input type="hidden" id="lijst_id" name="lijst_id" value="<?=$_GET['id']?>">
+        <input type="hidden" id="voltooing" name="voltooing" value="onvoltooid">
         <input type="submit" class="btn btn-primary" name="save">
     </form>
 </body>

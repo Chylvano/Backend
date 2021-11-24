@@ -21,6 +21,19 @@ catch(PDOException $e)
     }
 }
 
+function getAllTakenByIdOrderByDate($id){   
+    $conn = connect();
+    $stmt = $conn->prepare("SELECT * FROM taken WHERE lijst_id = :id ORDER BY datum"); 
+    $stmt->execute(['id' => $id]);
+    return $stmt->fetchAll();
+}
+
+function getAllTakenByIdOrderByStatus($id){   
+    $conn = connect();
+    $stmt = $conn->prepare("SELECT * FROM taken WHERE lijst_id = :id ORDER BY status"); 
+    $stmt->execute(['id' => $id]);
+    return $stmt->fetchAll();
+}
 
 function getAllAfspraken(){
     $conn = connect();
@@ -30,34 +43,33 @@ function getAllAfspraken(){
     return $result;
 }
 
-function getAllAfsprakenByName(){
-    $conn = connect();
-    $stmt = $conn->prepare('SELECT * FROM lijst ORDER BY date, tijd');
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    return $result;
-}
+// function getAllTaken($id){   
+//     $conn = connect();
+//     $stmt = $conn->prepare("SELECT * FROM taken WHERE lijst_id = :id"); 
+//     $stmt->execute(['id' => $id]);
+//     return $stmt->fetchAll();
+// }
 
 function getAllTakenByDate(){
     $conn = connect();
-    $stmt = $conn->prepare('SELECT * FROM taken ORDER BY datum, tijd');
+    $stmt = $conn->prepare('SELECT * FROM taken ORDER BY datum');
     $stmt->execute();
     $result = $stmt->fetchAll();
     return $result;
 }
 
-
-function countAllAfspraken(){
-    $conn = connect();
-    $pdoQuery = "select id from lijst";
-    $pdoResult = $conn->query($pdoQuery);
-    $rows = $pdoResult->rowCount();
-    return $rows;
-}
 
 function getOneAfspraak(){
     $conn = connect();
     $stmt = $conn->prepare("SELECT * FROM lijst where id=:id");
+    $stmt->execute(['id' => $_GET['id']]);
+    $result = $stmt->fetch();
+    return $result;
+}
+
+function getOneTaak(){
+    $conn = connect();
+    $stmt = $conn->prepare("SELECT * FROM taken where id=:id");
     $stmt->execute(['id' => $_GET['id']]);
     $result = $stmt->fetch();
     return $result;
@@ -87,10 +99,10 @@ function getAllTakenById($id){
 
 function editTaak($id, $status){
     $conn = connect(); 
-    $stnt = $conn->prepare("UPDATE taken SET id = :id,  status = :status WHERE id = :id");
-    $stnt->bindParam(':id', $id);
-    $stnt->bindParam(':status', $status);
-    $stnt->execute();
+    $stmt = $conn->prepare("UPDATE taken SET id = :id,  voltooing = :voltooing WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':voltooing', $voltooing);
+    $stmt->execute();
 }
 
 function deleteTaak($id){
@@ -111,5 +123,44 @@ function deleteTaakByLijstId($id){
     $stmt->execute([":deleteid" =>$id]);
 }
 
-?>
+function updateLijst($id, $naam, $info, $datum){
+    $conn = connect(); 
+    $stmt = $conn->prepare("UPDATE lijst SET id = :id,  naam = :naam, info = :info, datum = :datum WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':naam', $naam);
+    $stmt->bindParam(':info', $info);
+    $stmt->bindParam(':datum', $datum);
+    $stmt->execute();
+}
 
+function updateTaak($id, $naam, $info, $datum){
+    $conn = connect(); 
+    $stmt = $conn->prepare("UPDATE taken SET id = :id,  naam = :naam, info = :info, datum = :datum WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':naam', $naam);
+    $stmt->bindParam(':info', $info);
+    $stmt->bindParam(':datum', $datum);
+    $stmt->execute();
+}
+
+function insertLijst($naam, $info, $datum){
+    $conn = connect(); 
+    $stmt = $conn->prepare("INSERT lijst SET naam = :naam, info = :info, datum = :datum");
+    $stmt->bindParam(':naam', $naam);
+    $stmt->bindParam(':info', $info);
+    $stmt->bindParam(':datum', $datum);
+    $stmt->execute();
+}
+
+function insertTaak($lijst_id, $naam, $info, $datum, $voltooing){
+    $conn = connect(); 
+    $stmt = $conn->prepare("INSERT taken SET lijst_id = :lijst_id naam = :naam, info = :info, datum = :datum, voltooing = :voltooing");
+    $stmt->bindParam(':lijst_id', $lijst_id);
+    $stmt->bindParam(':naam', $naam);
+    $stmt->bindParam(':info', $info);
+    $stmt->bindParam(':datum', $datum);
+    $stmt->bindParam(':voltooing', $voltooing);
+    $stmt->execute();
+}
+
+?>

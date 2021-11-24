@@ -3,7 +3,6 @@
     require ("assets/includes/navbar.php");
     $id = $_GET['id'];
     $rows = CountAllTaken();
-    $results = getAllTakenInLijst();
     $result = getOneAfspraak();
 
 ?>

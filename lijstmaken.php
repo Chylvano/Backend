@@ -12,6 +12,10 @@ require ("assets/includes/navbar.php");
             <label for="info">Info:</label>
             <input name="info" id="info" placeholder="Info" required>
         </p>
+        <p class="my-4 form-group">
+            <label for="datum">Datum:</label>
+            <input type="date" class="datum" id="datum" name="datum" required>
+        </p>
         <input type="submit" class="btn btn-primary" name="save">
     </form>
 </body>

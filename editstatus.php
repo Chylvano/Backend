@@ -2,15 +2,14 @@
 require ("assets/includes/functions.php");
 $conn = connect();
 $id = $_GET['id'];
+$voltooing = $_GET['voltooing'];
 
-$status = $_GET['status'];
-
-if($status == 'voltooid'){
-    $status = 'onvoltooid';
+if($voltooing == 'voltooid'){
+    $voltooing = 'onvoltooid';
 } else{
-    $status = 'voltooid';
+    $voltooing = 'voltooid';
 }
 
-editTaak($id, $status);
+editTaak($id, $voltooing);
 
 header('location: index.php');
