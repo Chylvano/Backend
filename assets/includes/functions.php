@@ -97,7 +97,7 @@ function getAllTakenById($id){
     return $stmt->fetchAll();
 }
 
-function editTaak($id, $status){
+function editTaak($id, $voltooing){
     $conn = connect(); 
     $stmt = $conn->prepare("UPDATE taken SET id = :id,  voltooing = :voltooing WHERE id = :id");
     $stmt->bindParam(':id', $id);
@@ -154,7 +154,7 @@ function insertLijst($naam, $info, $datum){
 
 function insertTaak($lijst_id, $naam, $info, $datum, $voltooing){
     $conn = connect(); 
-    $stmt = $conn->prepare("INSERT taken SET lijst_id = :lijst_id naam = :naam, info = :info, datum = :datum, voltooing = :voltooing");
+    $stmt = $conn->prepare("INSERT taken SET lijst_id = :lijst_id, naam = :naam, info = :info, datum = :datum, voltooing = :voltooing");
     $stmt->bindParam(':lijst_id', $lijst_id);
     $stmt->bindParam(':naam', $naam);
     $stmt->bindParam(':info', $info);

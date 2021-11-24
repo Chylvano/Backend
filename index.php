@@ -14,7 +14,7 @@ $result = getAllAfspraken();
             <input class="buttons" type="submit" name="datum" value="Sorteer op datum">
        </form>
        <form class="form" method="post">
-            <input class="buttons" type="submit" name="status" value="Sorteer op status">
+            <input class="buttons" type="submit" name="voltooing" value="Sorteer op status">
        </form>
         </div>
         <?php
@@ -50,10 +50,10 @@ $result = getAllAfspraken();
             <p class="card-text"><?=$taak['datum']?></p>
           
             <?php if ($taak['voltooing'] == 'voltooid'){?>
-                <a class="btn btn-success" href="editstatus.php?id=<?= $taak['id']?>voltooing=<?= $taak['voltooing']?>"></a>
+                <a class="btn btn-success" href="editstatus.php?id=<?= $taak['id']?>&voltooing=<?= $taak['voltooing']?>"></a>
            
             <?php } else { ?>
-                <a class="btn btn-danger" href="editstatus.php?id=<?= $taak['id']?>voltooing=<?= $taak['voltooing']?>"></a>
+                <a class="btn btn-danger" href="editstatus.php?id=<?= $taak['id']?>&voltooing=<?= $taak['voltooing']?>"></a>
                 </div>
           <?php  
           }
